@@ -140,9 +140,13 @@
     <textarea id="bioInput" placeholder="Write about yourself here..."></textarea>
 
     <div class="buttons">
-      <button onclick="translateHindi()">Translate to Hindi</button>
-      <button onclick="translateHinglish()">Translate to Hinglish</button>
-      <button onclick="showOriginal()">Original</button>
+     <button onclick="translateHindi()">Translate to Hindi</button>
+
+<button onclick="translateHinglish()">Translate to Hinglish</button>
+
+<button onclick="showOriginal()">Original</button>
+
+<button onclick="addComment()">Post Comment</button>
     </div>
 
     <div class="output" id="outputBox">
@@ -166,82 +170,105 @@
 
   </div>
 
-  <script>
-    let originalText = "";
+ <script type="module">
 
-    function translateHindi() {
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-      originalText = document.getElementById("bioInput").value;
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-      let hindiText =
-       ```html
+const firebaseConfig = {
+  apiKey: "AIzaSyBRsi-VLYJO_KfaVMox5UsgESeeCQRXvV4",
+  authDomain: "kushal-24513.firebaseapp.com",
+  databaseURL: "https://kushal-24513-default-rtdb.firebaseio.com",
+  projectId: "kushal-24513",
+  storageBucket: "kushal-24513.firebasestorage.app",
+  messagingSenderId: "339611366105",
+  appId: "1:339611366105:web:2b99299a75bf4729fe44c8"
+};
 
-"नमस्ते, मेरा नाम कुशल है। शायद आपको यह मैसेज थोड़ा अजीब या अचानक लगे, और सच कहूं तो मुझे भी समझ नहीं आ रहा कि मैं यह सब कैसे लिखूं 😅 मैं आमतौर पर किसी अनजान लड़की से बात नहीं करता, इसलिए थोड़ा नर्वस हूं। मैं रोज़ 7:30 बजे निकलता हूं, और शायद हम दोनों का समय भी लगभग एक जैसा होता है। कई बार लगा कि आपसे बात करूं, लेकिन कभी हिम्मत नहीं हो पाई। बस इतना कहना था कि अगर आप सहज हों, तो क्या हम बात कर सकते हैं? सिर्फ एक दोस्त की तरह 😊
-कृपया कुछ गलत मत समझिएगा, मेरा इरादा सिर्फ सामान्य दोस्ती और बात करने का है। सच बताऊं तो मैंने अपनी स्कूल लाइफ में कभी किसी लड़की से ठीक से बात नहीं की, और आज पहली बार हिम्मत करके यह मैसेज लिख रहा हूं। मैं आपको परेशान नहीं करना चाहता, बस सम्मान के साथ दोस्ती का हाथ बढ़ाना चाहता हूं। अगर आपको ठीक लगे तभी जवाब दीजिएगा। और अगर आप बात नहीं करना चाहतीं, तो आप साफ मना भी कर सकती हैं — मैं आपके फैसले की पूरी इज़्ज़त करूंगा।
-धन्यवाद, आपने मेरा मैसेज/वेबसाइट देखा 😊  
-नीचे कमेंट जरूर करें प्लीज़....";
-```
+const app = initializeApp(firebaseConfig);
 
-
-      document.getElementById("outputBox").innerHTML = hindiText;
-    }
-
-    function translateHinglish() {
-
-      originalText = document.getElementById("bioInput").value;
-
-      let hinglishText =
-        "Namaste, mera naam Kushal hai. Shayad aapko ye message thoda unexpected lage, aur honestly mujhe bhi samajh nahi aa raha ki main ye sab kaise likhun 😅 Main normally kisi unknown ladki se baat nahi karta, isliye thoda nervous hoon. Main roz 7:30 baje nikalta hoon, aur shayad hum dono ka timing bhi almost same hota hai. Kai baar laga ki aapse baat karun, lekin kabhi meri himmat hi nahi ho pati. Bas itna kehna tha ki agar aap comfortable ho, to kya hum baat kar sakte hain? INSTAGRAM -@dhantara_live Sirf ek friend ki tarah 😊 Please kuch galat mat samajhna, mera intention bas normal friendship aur baat karne ka hai. (Sach bolun to maine apni school life me kabhi kisi ladki se baat nahi ki, aur aaj pehli baar himmat karke ye message likh raha hoon.) Main aapko disturb nahi karna chahta, bas respectfully dosti ka haath badhana chahta hoon. Agar aapko comfortable lage tabhi reply kariyega. Aur agar aap interested nahi hain, to aap clearly mana kar sakti hain — main aapke decision ki puri respect karunga. Thanks, aapne mera message/website dekha 😊NICHE COMMENT KARE PLZZ...";
+const db = getDatabase(app);
 
 
-      document.getElementById("outputBox").innerHTML = hinglishText;
-    }
+// HINDI
+window.translateHindi = function () {
 
-  function addComment() {
+  document.getElementById("outputBox").innerHTML =
+  "नमस्ते, मेरा नाम कुशल है 😊 नीचे कमेंट जरूर करें...";
+};
 
-  let commentInput = document.getElementById("commentInput");
 
-  let commentText = commentInput.value;
+// HINGLISH
+window.translateHinglish = function () {
 
-  if(commentText.trim() === ""){
-    alert("Please write a comment");
+  document.getElementById("outputBox").innerHTML =
+ "Namaste, mera naam Kushal hai. Shayad aapko ye message thoda unexpected lage, aur honestly mujhe bhi samajh nahi aa raha ki main ye sab kaise likhun 😅 Main normally kisi unknown ladki se baat nahi karta, isliye thoda nervous hoon. Main roz 7:30 baje nikalta hoon, aur shayad hum dono ka timing bhi almost same hota hai. Kai baar laga ki aapse baat karun, lekin kabhi meri himmat hi nahi ho pati. Bas itna kehna tha ki agar aap comfortable ho, to kya hum baat kar sakte hain? INSTAGRAM -@dhantara_live Sirf ek friend ki tarah 😊 Please kuch galat mat samajhna, mera intention bas normal friendship aur baat karne ka hai. (Sach bolun to maine apni school life me kabhi kisi ladki se baat nahi ki, aur aaj pehli baar himmat karke ye message likh raha hoon.) Main aapko disturb nahi karna chahta, bas respectfully dosti ka haath badhana chahta hoon. Agar aapko comfortable lage tabhi reply kariyega. Aur agar aap interested nahi hain, to aap clearly mana kar sakti hain — main aapke decision ki puri respect karunga. Thanks, aapne mera message/website dekha 😊NICHE COMMENT KARE PLZZ...";
+};
+
+
+// ORIGINAL
+window.showOriginal = function () {
+
+  document.getElementById("outputBox").innerHTML =
+  document.getElementById("bioInput").value;
+};
+
+
+// ADD COMMENT
+window.addComment = function () {
+
+  let commentText =
+  document.getElementById("commentInput").value;
+
+  if(commentText.trim() == ""){
+    alert("Write comment");
     return;
   }
 
-  let comments = JSON.parse(localStorage.getItem("comments")) || [];
+  push(ref(db, "comments"), {
+    text: commentText
+  });
 
-  comments.unshift(commentText);
+  document.getElementById("commentInput").value = "";
+};
 
-  localStorage.setItem("comments", JSON.stringify(comments));
 
-  displayComments();
+// SHOW COMMENTS LIVE
+const commentsRef = ref(db, "comments");
 
-  commentInput.value = "";
-}
+onValue(commentsRef, (snapshot) => {
 
-function displayComments(){
+  const data = snapshot.val();
 
-  let commentsBox = document.getElementById("commentsBox");
+  const commentsBox =
+  document.getElementById("commentsBox");
 
   commentsBox.innerHTML = "";
 
-  let comments = JSON.parse(localStorage.getItem("comments")) || [];
+  if(data){
 
-  comments.forEach(comment => {
+    Object.values(data).reverse().forEach(comment => {
 
-    commentsBox.innerHTML += `
-      <div class="comment">
-        <strong>User:</strong><br>
-        ${comment}
-      </div>
-    `;
+      commentsBox.innerHTML += `
+        <div class="comment">
+          <strong>User:</strong><br>
+          ${comment.text}
+        </div>
+      `;
 
-  });
+    });
 
-}
+  }
 
-displayComments();
-  </script>
+});
+
+</script>
 
 </body>
 </html>
